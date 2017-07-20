@@ -1,0 +1,160 @@
+
+第一部分：虚拟环境创建激活
+1安装virtuallenv
+F:\Python35>pip3 install virtualenv
+Collecting virtualenv
+  Downloading virtualenv-15.1.0-py2.py3-none-any.whl (1.8MB)
+    100% |████████████████████████████████| 1.8MB 133kB/s
+Installing collected packages: virtualenv
+Successfully installed virtualenv-15.1.0
+
+2创建虚拟环境DjangoEVN
+F:\Python35>virtualenv DjangoEVN
+Using base prefix 'f:\\python35'
+New python executable in F:\Python35\DjangoEVN\Scripts\python35.exe
+Also creating executable in F:\Python35\DjangoEVN\Scripts\python.exe
+Installing setuptools, pip, wheel...done
+
+3激活虚拟环境
+激活虚拟环境：
+
+F:\Python35\DjangoEVN\Scripts>activate.bat
+
+(DjangoEVN) F:\Python35\DjangoEVN\Scripts>
+
+
+第二部 在pycharm中使用配置好的virtualenv环境
+
+引用自：http://blog.csdn.net/hy245120020/article/details/50776197
+打开setting添加本地python环境
+http://pythonguidecn.readthedocs.io/zh/latest/dev/virtualenvs.html
+
+第三部分;安装开发所需模块django、selenium、、、
+
+
+PyCharm创建virtualenv方法
+http://www.cnblogs.com/jhao/p/6062497.html
+参考博客
+http://blog.csdn.net/qingche456/article/category/6685325
+一、如何创建Django项目
+
+在你的目标文件夹下，用快捷键打开命令行。
+
+在目标文件夹下输入创建项目命令。
+
+    django-admin startproject projectname
+
+在pycharm中打开所创建的项目，并在项目中使用terminal或在上一个命令所用的cmd输入创建django app命令。
+
+    python manage.py startapp appname
+
+二、如何设置虚拟环境
+
+在pycharm中打开所创建项目的Setting->Project: projectname->Project Interpreter
+
+点击齿轮图标->Create Virtual Env，输入虚拟环境名Envx，点选inherit global site-packages，创建虚拟环境。
+
+三、如何手动添加templates文件夹
+
+在项目所在文件夹创建文件夹templates，并在项目名projectname文件夹中的setting.py中找到
+
+    TEMPLATES = [
+
+       {
+
+           'BACKEND':'django.template.backends.django.DjangoTemplates',
+
+           'DIRS': [],
+
+           'APP_DIRS':True,
+
+           'OPTIONS': {
+
+           'context_processors': [
+
+               'django.template.context_processors.debug',
+
+               'django.template.context_processors.request',
+
+               'django.contrib.auth.context_processors.auth',
+
+               'django.contrib.messages.context_processors.messages',
+
+               ],
+
+           },
+
+       },
+
+    ]
+
+将其中的
+
+    'DIRS': [],
+
+改为
+
+    'DIRS': [os.path.join(BASE_DIR,'templates')],
+
+其中第一个参数是指项目文件夹的路径，第二个是templates，合起来表示一个相对路径。
+
+再添加django app的映射到项目。
+
+    INSTALLED_APPS = [
+
+       'django.contrib.admin',
+
+       'django.contrib.auth',
+
+       'django.contrib.contenttypes',
+
+       'django.contrib.sessions',
+
+       'django.contrib.messages',
+
+       'django.contrib.staticfiles',
+
+    ]
+
+在列表中添加字符串‘django app name’并保存。
+
+    INSTALLED_APPS = [
+
+       'django.contrib.admin',
+
+       'django.contrib.auth',
+
+       'django.contrib.contenttypes',
+
+       'django.contrib.sessions',
+
+       'django.contrib.messages',
+
+       'django.contrib.staticfiles',
+
+       'django app name'
+
+    ]
+
+然后就可以直接在pycharm中点击template文件夹选择new，在其中新建html文件了。
+
+四、如何给网页添加static静态元素
+
+在项目文件夹下创建static文件夹，并将templete中的html文件要引用的css文件和图片等内容放进其中。
+
+然后将static文件夹的路径添加到项目中。打开projectname文件夹中的setting.py，找到以下内容。
+
+    STATIC_URL='/static/'
+
+在其下面添加static文件夹的相对路径
+
+    STATIC_URL='/static/'
+
+    STATICFILES_DIRS = (os.path.join(BASE_DIR,"static"),)
+
+要注意，STATICFILES_DIRS是turple来的，后面有个逗号表示其为turple！
+
+作者：木禾米粥
+链接：http://www.jianshu.com/p/bbd574cb6593
+來源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
